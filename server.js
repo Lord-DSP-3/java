@@ -84,7 +84,6 @@ const privateMessageHandler = async (message) => {
       });
     }
     return await sendMessage(message.chat.id, "☕");
-  }
 };
 
 
