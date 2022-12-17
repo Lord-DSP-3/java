@@ -76,28 +76,32 @@ app.use(
 );
 app.use(express.json());
 
-app.onText(/\/start/, (msg) => {
-  app.sendMessage(msg.chat.id, "Yes I'm alive // Test-bot \nBase For My Kawaii bot in JavaScript//Node.js");
+const privateMessageHandler = async (message) => {
+  const responding_msg = message.reply_to_message ? message.reply_to_message : message;
+    if (message.text?.toLowerCase().includes("/start")) {
+      return await sendMessage(message.chat.id, getHelpMessage(app.locals.botName), {
+        parse_mode: "Markdown",
+      });
+    }
+    return await sendMessage(message.chat.id, "☕");
+  }
+};
+
+
+
+
+app.post("/", (req, res) => {
+  const message = req.body?.message;
+  if (message?.chat?.type === "private") {
+    privateMessageHandler(message);
+  }
+  res.sendStatus(204);
 });
 
-const FACT_URL = "https://catfact.ninja/fact";
-
-app.onText(/\/fact/, (msg) => {
-  var request = require("request");
-
-  var options = {
-    method: "GET",
-    url: FACT_URL,
-    json: true,
-  };
-
-  request(options, function (error, response, body) {
-    if (error) throw new Error(error);
-
-    app.sendMessage(msg.chat.id, body.fact);
-  });
+app.get("/", (req, res) => {
+  return res.send(
+    `<meta http-equiv="Refresh" content="0; URL=https://t.me/${app.locals.botName ?? ""}">`
+  );
 });
-
-
 
 app.listen(PORT, "0.0.0.0", () => console.log(`server listening on port ${PORT}`));
