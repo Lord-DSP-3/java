@@ -62,9 +62,9 @@ const getHelpMessage = (botName) =>
   [
     `Bot Name: ${botName ? `@${botName}` : "(unknown)"}`,
     `Revision: \`${REVISION.substring(0, 7)}\``,
-    `Use trace.moe with API Key? ${TRACE_MOE_KEY ? "`true`" : "`false`"}`,
-    `Anilist Info Endpoint: ${ANILIST_API_URL}`,
-    `Homepage: ${packageJSON?.homepage ?? ""}`,
+    `☕`,
+    `Anilist`,
+    `💕`,
   ].join("\n");
 
 app.disable("x-powered-by");
@@ -317,10 +317,10 @@ const privateMessageHandler = async (message) => {
         parse_mode: "Markdown",
       });
     }
-    return await sendMessage(message.chat.id, "You can Send / Forward anime screenshots to me.");
+    return await sendMessage(message.chat.id, "💕");
   }
 
-  const bot_message = await sendMessage(message.chat.id, "Searching...", {
+  const bot_message = await sendMessage(message.chat.id, "☕", {
     reply_to_message_id: responding_msg.message_id,
   });
 
